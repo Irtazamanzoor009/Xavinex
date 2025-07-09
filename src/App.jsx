@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import ProductCard from './components/ProductCard';
-import SalesChart from './components/SalesChart';
+import ProductCard from './Components/ProductCard';
+import SalesChart from './Components/SalesChart';
 
 const products = [
   { name: 'Air Pods Pro', sold: 12 },

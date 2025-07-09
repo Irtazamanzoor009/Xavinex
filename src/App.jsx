@@ -2,16 +2,22 @@ import React, { useState } from 'react';
 import ProductCard from './Components/ProductCard';
 import SalesChart from './Components/SalesChart';
 
-const products = [
-  { name: 'Air Pods Pro', sold: 12 },
-  { name: 'Nike Dunk Low', sold: 8 },
-  { name: 'Apple Watch', sold: 5 },
-  { name: 'Chanel Perfume', sold: 3 },
+const allProducts = [
+  { name: 'Air Pods Pro', sold: 12, platform: 'Mobile' },
+  { name: 'Nike Dunk Low', sold: 8, platform: 'Web' },
+  { name: 'Apple Watch', sold: 5, platform: 'Desktop' },
+  { name: 'Chanel Perfume', sold: 3, platform: 'Mobile' },
 ];
 
 function App() {
-  const [visibility, setVisibility] = useState('Hidden');
+  const [timeRange, setTimeRange] = useState('Last 7 Days');
   const [platform, setPlatform] = useState('All Platforms');
+
+
+  const filteredProducts = allProducts.filter((product) => {
+    if (platform === 'All Platforms') return true;
+    return product.platform === platform;
+  });
 
   return (
     <div className="min-h-screen bg-gray-100 p-6 justify-end">
@@ -19,12 +25,13 @@ function App() {
 
         <div className="flex gap-4 ">
           <select
-            value={visibility}
-            onChange={(e) => setVisibility(e.target.value)}
+            value={timeRange}
+            onChange={(e) => setTimeRange(e.target.value)}
             className="p-2 pr-6 border border-gray-300 rounded-md bg-white text-sm"
           >
-            <option value="Visible">Visible</option>
-            <option value="Hidden">Hidden</option>
+            <option value="Last 7 Days">Last 7 Days</option>
+            <option value="Last 30 Days">Last 30 Days</option>
+            <option value="Last Year">Last Year</option>
           </select>
 
           <select
@@ -41,8 +48,8 @@ function App() {
       </div>
 
       <div className="flex flex-wrap gap-4 justify-between">
-        <ProductCard title="Top Selling Products" products={products} />
-        <ProductCard title="Fastest Selling Products" products={products} />
+        <ProductCard title="Top Selling Products" products={filteredProducts} />
+        <ProductCard title="Fastest Selling Products" products={filteredProducts} />
       </div>
       <SalesChart />
     </div>
